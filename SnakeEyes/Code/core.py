@@ -35,6 +35,8 @@ class Game:
 
         self.Players = [self.p1, self.p2, self.p3, self.p4]
 
+        pygame.joystick.init()  # initialize joystick module
+
     ##### Run Game Loop #####
     def run(self):
         self.update()  # render game
@@ -110,12 +112,25 @@ class Game:
             (0, 0, 0),
         )
 
+        for controller in self.controllers:
+            self.GAME_FONT.render_to(
+                self.screen,
+                (10, 605),
+                "Controllers Connected: " + str(pygame.joystick.get_count()),
+                (0, 0, 0)
+            )
+        if self.controllers.__len__() == 0:
+            self.GAME_FONT.render_to(
+                self.screen,
+                (10, 605),
+                "No Controllers Connected",
+                (0, 0, 0),
+            )
+
         pygame.display.flip()
 
     ##### Game Functions #####
     def inputManager(self):
-
-        pygame.joystick.init()  # Initialize the joystick module
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
