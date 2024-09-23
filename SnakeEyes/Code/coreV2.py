@@ -42,6 +42,7 @@ class Game:
         self.scene = "game"
         self.ready = False
         self.allAlarms = False
+        self.controllers = []
 
         self.moveSpeed = 300
 
@@ -296,9 +297,11 @@ class Game:
     def inputManager(self):
         dt = self.clock.tick(60) / 1000
 
-        
+
         keys = pygame.key.get_pressed()
         
+        
+        pygame.joystick.init()  #Initialize pygames controller module      
 
         ## need boundaries
 
@@ -445,6 +448,11 @@ class Game:
                         self.scene = "game"
                     if event.key == pygame.K_5:
                         self.scene = "credits"
+                        
+                # Controller Integration
+                if event.type == pygame.JOYDEVICEADDED:
+                    controller = pygame.joystick.Joystick(event.device_index)
+                    self.controllers.append(controller) # Append new controller to 'controllers' array
 
     def roundCheck(self):
         count = 0
