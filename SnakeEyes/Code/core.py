@@ -115,18 +115,19 @@ class Game:
         for controller in self.controllers:
             self.GAME_FONT.render_to(
                 self.screen,
-                (10, 605),
+                (10, 610),
                 "Controllers Connected: " + str(pygame.joystick.get_count()),
                 (0, 0, 0)
             )
         if self.controllers.__len__() == 0:
             self.GAME_FONT.render_to(
                 self.screen,
-                (10, 605),
+                (10, 610),
                 "No Controllers Connected",
                 (0, 0, 0),
             )
-
+        # DEBUG STATEMENT
+        # print(getattr(pygame, "IS_CE", False))  # checking if pygame-ce
         pygame.display.flip()
 
     ##### Game Functions #####
