@@ -2,6 +2,7 @@ import pygame
 import pygame.freetype  # Import the freetype module.
 import random
 from settings import Settings
+from controllers import Controler
 
 
 ########## GAME ##########
@@ -22,7 +23,7 @@ class Game:
         self.winScore = 50
         self.lastRound = False
         self.gameOverFlag = False
-        self.controllers = []
+        # self.controllers = []
 
         self.p1 = Player()
         self.p2 = Player()
@@ -34,8 +35,9 @@ class Game:
         self.p4.playerNum = 4
 
         self.Players = [self.p1, self.p2, self.p3, self.p4]
+        
 
-        pygame.joystick.init()  # initialize joystick module
+        #pygame.joystick.init()  # initialize joystick module
 
     ##### Run Game Loop #####
     def run(self):
@@ -112,20 +114,20 @@ class Game:
             (0, 0, 0),
         )
 
-        for controller in self.controllers:
-            self.GAME_FONT.render_to(
-                self.screen,
-                (10, 610),
-                "Controllers Connected: " + str(pygame.joystick.get_count()),
-                (0, 0, 0)
-            )
-        if self.controllers.__len__() == 0:
-            self.GAME_FONT.render_to(
-                self.screen,
-                (10, 610),
-                "No Controllers Connected",
-                (0, 0, 0),
-            )
+        # for controller in self.controllers:
+        # self.GAME_FONT.render_to(
+        #     self.screen,
+        #     (10, 610),
+        #     "Controllers Connected: " + str(pygame.joystick.get_count()),
+        #     (0, 0, 0)
+        # )
+        # if self.controllers.__len__() == 0:
+        #     self.GAME_FONT.render_to(
+        #         self.screen,
+        #         (10, 610),
+        #         "No Controllers Connected",
+        #         (0, 0, 0),
+        #     )
         # DEBUG STATEMENT
         # print(getattr(pygame, "IS_CE", False))  # checking if pygame-ce
         pygame.display.flip()
@@ -209,10 +211,13 @@ class Game:
                 if event.key == pygame.K_s:
                     self.scene_manager.switch_scene("scene")
 
-            # Adding Joystick
-            if event.type == pygame.JOYDEVICEADDED:
-                controller = pygame.joystick.Joystick(event.device_index)
-                self.controllers.append(controller)
+            # # Adding and Removing a Joystick
+            # if event.type == pygame.JOYDEVICEADDED:
+            #     controller = pygame.joystick.Joystick(event.device_index)
+            #     self.controllers.append(controller)
+
+            # if event.type == pygame.JOYDEVICEREMOVED:
+            #     self.controllers.pop()
 
     def roundCheck(self):
         count = 0
